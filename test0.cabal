@@ -1,0 +1,63 @@
+cabal-version:      3.4
+name:               test0
+version:            0.1.0.0
+-- synopsis:
+-- description:
+license:            GPL-3.0-or-later
+license-file:       LICENSE
+author:             thefireflyer
+maintainer:         the.fireflyer@protonmail.com
+-- copyright:
+category:           System
+build-type:         Simple
+extra-doc-files:    CHANGELOG.md
+-- extra-source-files:
+
+common warnings
+    ghc-options: -Wall
+
+executable test0
+    import:           warnings
+    main-is:          Main.hs
+
+    build-depends:  
+        base   ^>= 4.17,
+        random ^>= 1.2,
+        turtle ^>= 1.6.2,
+        foldl  ^>= 1.4.16,
+        text   ^>= 2.0.2,
+        time   ^>= 1.12,
+        parsec ^>= 3.1.17.0,
+        array  ^>= 0.5.4.0,
+        containers           ^>= 0.7,
+        unordered-containers ^>= 0.2.20,
+        cmark-gfm ^>= 0.2.6,
+        lucid     ^>= 2.11.20230408
+
+    other-modules:
+        Common
+
+        DMS.Main
+        DMS.Config
+        DMS.Logging
+        DMS.StaticFolders
+
+        Trials.FileTrials
+        Trials.DictionaryScraper
+        Trials.Skyline
+
+        Calc.Numeric.Main
+        Calc.Algebraic.Main
+
+        Web.Main
+
+        SLang.Main
+
+    -- other-extensions:
+    hs-source-dirs:   app
+    default-language: GHC2021
+
+
+--  http://haskell.org/cabal/users-guide/
+
+--  https://cabal.readthedocs.io/en/stable/cabal-package-description-file.html
