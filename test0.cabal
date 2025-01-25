@@ -21,18 +21,19 @@ executable test0
     main-is:          Main.hs
 
     build-depends:  
-        base   ^>= 4.17,
+        base   ^>= 4.20,
         random ^>= 1.2,
         turtle ^>= 1.6.2,
         foldl  ^>= 1.4.16,
-        text   ^>= 2.0.2,
+        text   ^>= 2.1.1,
         time   ^>= 1.12,
         parsec ^>= 3.1.17.0,
         array  ^>= 0.5.4.0,
         containers           ^>= 0.7,
         unordered-containers ^>= 0.2.20,
         cmark-gfm ^>= 0.2.6,
-        lucid     ^>= 2.11.20230408
+        lucid     ^>= 2.11.20230408,
+        flow ^>= 2.0.0.5
 
     other-modules:
         Common

@@ -1,3 +1,8 @@
+/* ///////////////////////////////////////////////////////////////////////// */
+/*-----------------------------------------------------------------------------
+  General
+-----------------------------------------------------------------------------*/
+
 body {
   width: 100vw;
   height: 100vh;
@@ -12,9 +17,27 @@ body {
   background: #11111b;
   color: #cdd6f4;
 
-  font-size: 16pt;
-  font-family: "Linux Libertine", serif;
+  font-size: 13pt;
+  font-family: 'Linux Libertine', serif;
 }
+
+/* ///////////////////////////////////////////////////////////////////////// */
+/*-----------------------------------------------------------------------------
+  Branding
+-----------------------------------------------------------------------------*/
+
+#me {
+  font-family: 'Cormorant Garamond';
+  font-style: italic;
+  font-weight: bold;
+  font-size: 24pt;
+  margin: 1ch;
+}
+
+/* ///////////////////////////////////////////////////////////////////////// */
+/*-----------------------------------------------------------------------------
+  Text
+-----------------------------------------------------------------------------*/
 
 a {
   color: #f5c2e7;
@@ -25,6 +48,11 @@ a:hover {
   background: rgb(242, 205, 205, 0.1);
   text-decoration: underline 1pt rgb(245, 194, 231, 0.5);
 }
+
+/* ///////////////////////////////////////////////////////////////////////// */
+/*-----------------------------------------------------------------------------
+  Page
+-----------------------------------------------------------------------------*/
 
 header,
 footer {
@@ -41,6 +69,7 @@ footer {
 
 header {
   border-bottom: solid #313244 1pt;
+  
 }
 
 footer {
@@ -81,7 +110,7 @@ header button :hover {
   display: flex;
   flex-direction: column;
   z-index: 1;
-  /* padding: 2em 0; */
+  padding: 2em 0;
 }
 
 #cover {
@@ -137,17 +166,24 @@ header button :hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: scroll;
   position: relative;
+  
 }
 
 .page-inner {
   background: #181825;
   flex: 1;
-  width: 100%;
+  /* width: 100%; */
   max-width: 88ch;
   padding: 0.5ch 2.5ch;
   border: solid #1e1e2e 1pt;
+}
+
+#page li p {
+  padding: 0;
+  margin: 0;
 }
 
 br {
@@ -187,4 +223,36 @@ h2 {
 
 p .MathJax {
   margin: 2ch 0 !important;
+}
+
+.code-holder {
+  display: flex;
+  justify-content: center;
+  padding: 2ch 0;
+}
+
+.code {
+  background-color: #11111b;
+  border: #1e1e2e solid 1pt;
+  font-size: 12pt;
+  font-family: 'Fira Code', monospace;
+  /* padding: 1ch; */
+  overflow: hidden;
+  max-width: 90vw;
+  /* border-radius: 1ch; */
+  width: 81ch;
+}
+
+.code p {
+  padding: 0 1ch;
+}
+
+pre {
+  margin: 0;
+  padding: 1ch;
+  background-color: #11111b;
+  border-top: #1e1e2e solid 1pt;
+  font-size: 12pt;
+  font-family: 'Fira Code', monospace;
+  overflow-x: scroll;
 }

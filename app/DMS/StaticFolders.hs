@@ -166,6 +166,7 @@ code "ps" = True
 code "json" = True
 code "ts" = True
 code "py" = True
+code "rkt" = True
 code _ = False
 
 -------------------------------------------------------------------------------

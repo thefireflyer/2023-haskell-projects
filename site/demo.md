@@ -14,16 +14,34 @@ Mauris tempus arcu id massa sodales vehicula. Nulla tempus, purus ac mattis vest
 
 Vivamus faucibus gravida mi, non consectetur libero imperdiet a. Ut venenatis libero sed diam condimentum, a facilisis ex bibendum. Sed nisi nunc, mollis sed ligula vitae, tristique consequat nisl. Suspendisse tortor neque, finibus ac massa sed, mollis tincidunt est. Ut at ex feugiat, tincidunt nisi id, hendrerit dui. Aenean eget hendrerit leo. Nam feugiat tellus sapien, sit amet fringilla dui scelerisque a. Mauris ipsum enim, auctor eget pretium ut, blandit quis turpis. Vivamus dignissim dictum quam id sagittis. Sed mattis id velit eget consequat. Donec id arcu eget sapien scelerisque condimentum ut sed nisl. Etiam eget facilisis est.
 
-[Testing](file:///tmp/out.html) $a$ and $b$, where $a^2+b^2=c^2$.
+[Testing](index.md) $a$ and $b$, where $a^2+b^2=c^2$.
 
 $$\frac{a^2+b^2}{250c}$$
 
 Quisque pretium odio eros, mollis finibus magna tincidunt vel. Proin ipsum sapien, lobortis vel congue eu, sagittis et metus. Etiam eget tincidunt leo, in pellentesque massa. Curabitur laoreet mi ut lectus venenatis, eu condimentum eros imperdiet. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nunc leo arcu, imperdiet id consequat et, tincidunt quis arcu. Nam iaculis velit vel mi posuere hendrerit. Ut varius mauris et quam fringilla scelerisque. Nullam lacinia eros ac laoreet sagittis. Phasellus a neque sit amet tellus facilisis ultrices sit amet at quam. Curabitur accumsan orci eu mauris sodales, at interdum sem iaculis. Donec faucibus, risus non blandit mattis, sem felis condimentum augue, vitae porttitor est sem sed lacus.
 
-```haskell
+```haskell src=/app/test.hs
+score :: String
 score = ...
 
 main = minimize score...
+
+{------------------------------------------------------------------------------
+-> => ~>
+|><|><|
+|-----|
+/=====/
+>>= =<<
+>-> >=>
+>=.<=
+(| |)
+{| |}
+[| |]
+:: ;;
+a: A:
+------------------------------------------------------------------------------}
+
+-- ......................................................................................................................................... --
 ```
 
 Donec in facilisis nulla. Aliquam lacinia porta dolor nec molestie. Nam posuere, elit quis molestie vehicula, erat justo fringilla neque, non vehicula velit sapien quis est. Donec interdum elementum ex, eu tincidunt diam volutpat et. Etiam quis orci vel est interdum venenatis in ut lectus. Fusce placerat tortor in volutpat feugiat. Phasellus varius fringilla sem vitae porta. Cras eu tortor ex. Maecenas quis lacinia ipsum. In tempor efficitur congue. Suspendisse pharetra justo ac quam molestie, vel fermentum arcu malesuada. Nulla non erat nec quam accumsan posuere id ut tellus. Aenean elit risus, faucibus et dui at, accumsan sodales nisi. Pellentesque sed dictum erat, eu pharetra augue. Aenean aliquam eros at pharetra egestas.
@@ -42,3 +60,6 @@ Ut ornare leo in tempor maximus. Duis dignissim consectetur libero, vel posuere 
 
 Nullam non ligula massa. Pellentesque scelerisque posuere erat quis feugiat. Aliquam erat volutpat. Etiam vestibulum felis ut nibh faucibus, sit amet fringilla turpis maximus. Suspendisse condimentum ante sit amet rhoncus hendrerit. Mauris tincidunt velit ex, eu varius est vehicula vel. Aliquam et venenatis enim. In et sem porttitor, rhoncus dolor ut, consectetur neque. Sed vestibulum ligula eget mi faucibus convallis.
 
+# References
+
+[1] [...](.md)
