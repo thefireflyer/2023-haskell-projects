@@ -6,18 +6,18 @@ module Web.Main where
 
 import CMarkGFM (Node (..), commonmarkToNode, NodeType (..))
 import Data.Maybe (fromMaybe)
-import Data.Text (pack, stripPrefix, stripSuffix, unpack, replace, Text)
+import Data.Text (pack, stripPrefix, stripSuffix, unpack, Text)
 import Lucid
-import Turtle (liftIO, mktree, rmtree, sh, fold, extension, unless)
-import Turtle.Pattern qualified as Turtle
 import Turtle.Prelude qualified as Turtle
 import Data.Time.Clock.POSIX (posixSecondsToUTCTime, getCurrentTime)
 import Control.Concurrent (threadDelay)
 import Data.Time (UTCTime)
-import Common (todo)
+import Common
 import qualified Control.Foldl
 import Flow
 import qualified Data.Text.Lazy
+import Turtle (rmtree, fold, extension, mktree)
+import Control.Monad (unless)
 
 -------------------------------------------------------------------------------
 --- /////////////////////////////////////////////////////////////////////// ---
@@ -38,190 +38,24 @@ exclude = []
 -------------------------------------------------------------------------------
 --- /////////////////////////////////////////////////////////////////////// ---
 -------------------------------------------------------------------------------
-{------------------------------------------------------------------------------
-
-gen build <all?> <backtracking?>
-  [if no cache ...]
-    [find *.md]
-    [normalize]
-    [cache ast]
-    [build md dependency graph]
-      [media embeds] [page embeds] [html embeds] [eval embeds]
-      [<all?> -> all code fragments]
-    [cache graph]
-  [start watch]
-    [topo search]
-    [parallelize]
-      [run build task]
-
-gen clean
-  [delete cache]
-  [delete output folders]
-
--------------------------------------------------------------------------------
-
-[normalize]
-  [normalize urls]
-  [normalize local paths]
-
--------------------------------------------------------------------------------
-
-[build md dependency graph]
-  ?[media embeds]
-    [note path]
-  ?[page embeds]
-    [note path]
-  ?[html embeds]
-    [note path]
-  ?[eval embeds]
-    [note explicit source dependencies]
-  ?[all code fragments]
-    [build fragment graph]
-
-[start watch]
-  [start build thread]
-  [repeat every second]
-    [find *.md]
-    [if changed...]
-      [normalize]
-      [if ast changed ...]
-        [cache ast]
-        [update dep graph (downwards of modified page)]
-        [cache graph]
-        [rebuild page]
-        [rebuild upwards graph]
-
-    [for each external dependency ...]
-      [if changed ...]
-        [rebuild upwards graph]
-
-    ?[backtracking]
-      [find all written code fragments]
-      [if modified ...]
-          [update the markdown source for the fragment]
-          [cache ast]
-          [rebuild page] (skip code write task)
-          [rebuild upwards graph] (skip code write tasks)
-
--------------------------------------------------------------------------------
-
-[rebuild upwards graph]
-  - breadth first search
-    - pages depending on modified page
-  - on each new node, rebuild the page
-
-[topo search]
-  - has to note "order" of each node
-    order = max descentant order + 1
-
-[parallelize]
-  [for each order ...]
-    [evaluate nodes in parallel]
-
--------------------------------------------------------------------------------
-
-[build task]
-  ?[write code file fragments]
-    [compose fragments]
-    [write to specified path]
-  
-  ?[run eval embeds]
-    [compose fragments]
-    ?[bash]
-      [run in shell]
-      [note results]
-    ?[purescript]
-      [start "spago repl"]
-      [load specified dependencies]
-      [evaluate]
-      [note results]
-    ?[typst]
-      [create tmp typst project]
-      [write code]
-      [run typst]
-      [note build output]
-  
-  ?[render html]
-    [load embedded pages' outputs]
-    [build html head]
-      - relative path -> title
-      - stylesheets
-      - scripts
-      - desc
-    [build html body]
-      ?[heading]
-      ?[paragraph]
-      ?[link]
-      ?[image embed]
-      ?[video embed]
-      ?[text embed]
-      ?[page embed]
-        return page's output
-      ?[html embed]
-        return html
-      ?[eval embed]
-        ?[bash]
-          render as a code snippet
-          include results
-        ?[purescript]
-          render as a code snippet
-          include results
-        ?[typst]
-          ?[success]
-            render pdf embed
-          ?[failure]
-            render error message
-      ?[code fragment]
-        render as a code snippet
-        include
-          - fragment name
-          - write path (if applicable)
-      ?[code snippet]
-        syntax highlighting
-        lsp annotations (i.e., inferred type annotation in hsk)
-
--------------------------------------------------------------------------------
-
-[parse]
-  ?[markdown]
-  ?[literate source]
-    - fragment metadata
-    - fragment source (basically just comments)
-  ?[.bib]
-
--------------------------------------------------------------------------------
-
-Misc notes:
-  - literate source
-    EITHER
-      + Eval
-      + Named
-      + Write to file
-    
-    - backtracking doesn't support fragment boundary modification.
-      you can modify the contents of each fragment, but you can't modify the 
-      fragment boundary comments, or delete or add fragment boundary comments.
-
-    - backtracking doesn't support langauges without comments (i.e., json)
-    - behavior is undefined if two fragments try to write to the same file
-
-    - reference fragments with <<fragment-name>>
-    - named fragment in a different md file can be referenced by
-      <<path/to/file/fragment-name>>
-      (no .md !)
-
-  - build system
-    - dependency graph must be acyclic!
-    - dependencies have to be explicitly declared when they're not fragments
-    - the cache should not be manually modified
-
-------------------------------------------------------------------------------}
 
 main :: [String] -> IO ()
 main [] = main ["build"]
 main ["build"] = build (posixSecondsToUTCTime 0)
 main ["clean"] = rmtree outputPath
-main _ = putStrLn "invalid args"
+main ["help"] = help
+main (x:_) = putError ("unknown command " ++ show x) *> help
+
+-------------------------------------------------------------------------------
+
+help :: IO ()
+help = mapM_ putStrLn 
+            ["Usage: test0 web [command]"
+            ,"Commands:"
+            ,"    build    Build site"
+            ,"    clean    Delete all generated files"
+            ,"    help     Display this help message"
+            ,"Builds site if no command is given."]
 
 -------------------------------------------------------------------------------
 --- /////////////////////////////////////////////////////////////////////// ---
@@ -277,36 +111,6 @@ buildPage path = do
 --- /////////////////////////////////////////////////////////////////////// ---
 -------------------------------------------------------------------------------
 
-genSt :: IO ()
-genSt =
-  sh $ do
-    path <- Turtle.find (Turtle.ends $ Turtle.text $ pack ".md") inputPath
-    liftIO $ putStrLn ("[Gen] " ++ path)
-    src <- liftIO $ readFile path
-    mktree (outD path)
-    liftIO $ renderToFile (outP path) (genHTML (parseMd src))
-  where
-    srcD path = unpack
-          ( fromMaybe
-            (error "invalid path")
-            (stripSuffix 
-              (pack ".md") 
-              (fromMaybe
-                (error "invalid path") 
-                (stripPrefix 
-                  (pack inputPath) 
-                  (pack path)
-                )
-              )
-            )
-          )
-    outD path = outputPath ++ srcD path
-    outP path = outD path ++ ".html"
-
--------------------------------------------------------------------------------
---- /////////////////////////////////////////////////////////////////////// ---
--------------------------------------------------------------------------------
-
 fixLinks :: Node -> Node
 fixLinks (Node p (LINK url text) xs) = (Node p (LINK (fixLink url) text) (map fixLinks xs))
 fixLinks (Node p (IMAGE url text) xs) = (Node p (IMAGE (fixLink url) text) (map fixLinks xs))
@@ -357,21 +161,20 @@ genHTML ast =
 nodeHtml :: Node -> Html ()
 nodeHtml (Node _ nT children) = 
   case nT of
-    DOCUMENT -> div_ [class_ "page-inner"] (mapM_ nodeHtml children)
-    THEMATIC_BREAK -> br_ []
-    PARAGRAPH -> p_ (mapM_ nodeHtml children)
-    BLOCK_QUOTE -> div_ [class_ "quote"] (mapM_ nodeHtml children)
-    HTML_BLOCK x -> toHtmlRaw (unpack x)
-    HEADING 1 -> h1_ (mapM_ nodeHtml children)
-    HEADING 2 -> h2_ (mapM_ nodeHtml children)
-    HEADING 3 -> h3_ (mapM_ nodeHtml children)
-    LIST attr -> ul_ (mapM_ nodeHtml children)
-    ITEM -> li_ (mapM_ nodeHtml children)
-    -- LINEBREAK -> br_ []
-    HTML_INLINE x -> toHtmlRaw (unpack x)
-    EMPH -> i_ (mapM_ nodeHtml children)
-    STRONG -> b_ (mapM_ nodeHtml children)
-    LINK url title -> a_ [href_ url] (mapM_ nodeHtml children)
+    DOCUMENT        -> div_ [class_ "page-inner"] (mapM_ nodeHtml children)
+    THEMATIC_BREAK  -> br_ []
+    PARAGRAPH       -> p_ (mapM_ nodeHtml children)
+    BLOCK_QUOTE     -> div_ [class_ "quote"] (mapM_ nodeHtml children)
+    HTML_BLOCK x    -> toHtmlRaw (unpack x)
+    HEADING 1       -> h1_ (mapM_ nodeHtml children)
+    HEADING 2       -> h2_ (mapM_ nodeHtml children)
+    HEADING 3       -> h3_ (mapM_ nodeHtml children)
+    LIST _          -> ul_ (mapM_ nodeHtml children)
+    ITEM            -> li_ (mapM_ nodeHtml children)
+    HTML_INLINE x   -> toHtmlRaw (unpack x)
+    EMPH            -> i_ (mapM_ nodeHtml children)
+    STRONG          -> b_ (mapM_ nodeHtml children)
+    LINK url _      -> a_ [href_ url] (mapM_ nodeHtml children)
     CODE_BLOCK info x -> 
       div_ [class_ "code-holder"]
       ( div_ [class_ "code"] (do p_ (toHtml (unpack info))

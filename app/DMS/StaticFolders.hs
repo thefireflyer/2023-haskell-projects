@@ -27,7 +27,7 @@ import Turtle
 --- /////////////////////////////////////////////////////////////////////// ---
 -------------------------------------------------------------------------------
 
-path = "/home/casey/Downloads/"
+downloadsPath = "/home/casey/Downloads/"
 
 imagePrefix = "/home/casey/Downloads/by-date: images/"
 
@@ -52,7 +52,7 @@ codePrefix = "/home/casey/Downloads/by-type: code/"
 normalizeDownloads :: IO ()
 normalizeDownloads =
   sh
-    ( ls path >>= contextualize >>= normalizeFile
+    ( ls downloadsPath >>= contextualize >>= normalizeFile
     )
 
 -------------------------------------------------------------------------------
@@ -142,6 +142,7 @@ docs :: String -> Bool
 docs "pdf" = True
 docs "doc" = True
 docs "docx" = True
+docs "pptx" = True
 docs "xlsx" = True
 docs "txt" = True
 docs "odt" = True

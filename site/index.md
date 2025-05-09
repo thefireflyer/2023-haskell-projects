@@ -57,7 +57,7 @@ I mostly write software, but I do occasionally post other forms of writing. I al
 - [Photography](2024/photography.md)
 - [Bookmarks](2024/07/13/bookmarks.md)
 - [Contact Info](contact.md)
-<!-- - [Resume]($todo) -->
+- [Resume](todo.md)
 
 **Site todo list:**
 - Basics

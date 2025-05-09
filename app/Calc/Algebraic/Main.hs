@@ -11,6 +11,7 @@ import Control.Monad ((<=<))
 import GHC.Base (when)
 import GHC.Float (powerFloat)
 import Text.Parsec
+import Prelude hiding (pred)
 
 -------------------------------------------------------------------------------
 --- /////////////////////////////////////////////////////////////////////// ---
@@ -193,8 +194,8 @@ symbolic (Bin op a b) =
               f = symbolic . Bin op b'
         (Num _, Sym _) -> Bin op a' b' -- SAT problem or not reduce-able
         (Sym _, Num _) -> Bin op a' b' -- SAT problem or not reduce-able
-        (a'', Bin b_op b_a b_b) -> todo -- polynomials and related
-        (Bin a_op a_a a_b, b'') -> todo -- polynomials and related
+        (_a'', Bin _b_op _b_a _b_b) -> todo -- polynomials and related
+        (Bin _a_op _a_a _a_b, _b'') -> todo -- polynomials and related
         (_, _) -> todo
 symbolic (Vec xs) = Vec (map symbolic xs)
 symbolic (Boo x) = Boo x
