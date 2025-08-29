@@ -2,11 +2,11 @@
 |-|-|-|-|
 | DMS | Document Management System. | Active | MVP |
 | Web | Static Site Generator. | Inactive | MVP |
-| SL | Simply Typed Lambda Calculus interpreter and typechecker. | Inactive | Interpeter complete; typechecker started |
-| CAS | Computer Algebra System | Inactive | Started |
-| Num | Numeric calculator. | Inactive | Complete |
-| File trials | Learning project. | Inactive | Complete |
-| Skyline | Learning project. | Inactive | Complete |
+| SL | Simply Typed Lambda Calculus interpreter and typechecker. | Inactive | Interpeter completed; typechecker started |
+| CAS | Computer Algebra System. | Inactive | Started |
+| Num | Numeric calculator. | Inactive | Completed |
+| File trials | Learning project. | Inactive | Completed |
+| Skyline | Learning project. | Inactive | Completed |
 
 ```
 [casey@archlinux test0]$ cabal run . 
