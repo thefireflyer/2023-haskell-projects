@@ -49,9 +49,9 @@ import Turtle (inproc, stdout)
 main :: [String] -> IO ()
 -------------------------------------------------------------------------------
 
-main ["init"] = todo
-main ["nuke"] = todo
-main ["recover"] = todo
+main ["init"] = error todo
+main ["nuke"] = error todo
+main ["recover"] = error todo
 
 -------------------------------------------------------------------------------
 
@@ -60,15 +60,15 @@ main ["logs"] = stdout (inproc "xdg-open" [pack logPath] "")
 
 -------------------------------------------------------------------------------
 
-main ["https"] = todo
-main ["tcp"] = todo
-main ["bluetooth"] = todo
+main ["https"] = error todo
+main ["tcp"] = error todo
+main ["bluetooth"] = error todo
 
 -------------------------------------------------------------------------------
 
-main ("q" : _) = todo
-main ("a" : _) = todo
-main ["i"] = todo
+main ("q" : _) = error todo
+main ("a" : _) = error todo
+main ["i"] = error todo
 
 -------------------------------------------------------------------------------
 

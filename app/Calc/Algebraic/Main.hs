@@ -6,7 +6,7 @@ module Calc.Algebraic.Main where
 
 -------------------------------------------------------------------------------
 
-import Common (todo)
+import Common
 import Control.Monad ((<=<))
 import GHC.Base (when)
 import GHC.Float (powerFloat)
@@ -184,19 +184,19 @@ symbolic (Bin op a b) =
         (Vec a'', Num _) -> case op of -- very inconsistent, figure something else out!!
           Eqq -> Boo False
           Neq -> Boo True
-          Geq -> todo -- norm(vec) >= num
-          Leq -> todo -- norm(vec) <= num
-          Gtt -> todo -- norm(vec) > num
-          Ltt -> todo -- norm(vec) < num
+          Geq -> error todo -- norm(vec) >= num
+          Leq -> error todo -- norm(vec) <= num
+          Gtt -> error todo -- norm(vec) > num
+          Ltt -> error todo -- norm(vec) < num
           Pred -> error "[...] | number is undefined"
           _ -> Vec (map f a'')
             where
               f = symbolic . Bin op b'
         (Num _, Sym _) -> Bin op a' b' -- SAT problem or not reduce-able
         (Sym _, Num _) -> Bin op a' b' -- SAT problem or not reduce-able
-        (_a'', Bin _b_op _b_a _b_b) -> todo -- polynomials and related
-        (Bin _a_op _a_a _a_b, _b'') -> todo -- polynomials and related
-        (_, _) -> todo
+        (_a'', Bin _b_op _b_a _b_b) -> error todo -- polynomials and related
+        (Bin _a_op _a_a _a_b, _b'') -> error todo -- polynomials and related
+        (_, _) -> error todo
 symbolic (Vec xs) = Vec (map symbolic xs)
 symbolic (Boo x) = Boo x
 symbolic (Num x) = Num x
@@ -207,7 +207,7 @@ symbolic (Sym x) = Sym x
 -------------------------------------------------------------------------------
 
 sat :: a
-sat = error "todo"
+sat = error "error todo"
 
 -------------------------------------------------------------------------------
 --- /////////////////////////////////////////////////////////////////////// ---

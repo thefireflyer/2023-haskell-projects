@@ -22,6 +22,7 @@ executable test0
 
     build-depends:  
         base   ^>= 4.18,
+        lens   ^>= 5.3.5,
         random ^>= 1.2,
         turtle ^>= 1.6.2,
         foldl  ^>= 1.4.16,
@@ -35,10 +36,14 @@ executable test0
         cmark-gfm ^>= 0.2.6,
         lucid     ^>= 2.11.20230408,
         flow ^>= 2.0.0.5,
-        fsnotify ^>= 0.4.1.0
+        fsnotify ^>= 0.4.1.0,
+        terminal-size ^>= 0.3.4,
+        HUnit ^>= 1.6.2.0,
+        QuickCheck ^>= 2.16.0.0
 
     other-modules:
         Common
+        Data.Text.ANSI
 
         DMS.Main
         DMS.Config
@@ -56,6 +61,10 @@ executable test0
         Web.Main
 
         SLang.Main
+        SLang.DeBruijn
+        SLang.Pretty
+        SLang.Typechecker
+        SLang.Interpreter
 
     -- other-extensions:
     hs-source-dirs:   app

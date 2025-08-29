@@ -10,13 +10,16 @@ module Common where
 
 import Control.Arrow ((&&&), (|||))
 import Flow
+import Test.QuickCheck
+import Test.HUnit
+import Control.Monad (unless)
 
 -------------------------------------------------------------------------------
 --- /////////////////////////////////////////////////////////////////////// ---
 -------------------------------------------------------------------------------
 
-todo :: a
-todo = error "\ESC[31;1mTODO:\ESC[0m function not implemented!"
+todo :: String
+todo = "\ESC[31;1mTODO:\ESC[0m function not implemented!"
 
 -------------------------------------------------------------------------------
 
@@ -25,6 +28,47 @@ putError = putStrLn . (++) "\ESC[31;1merror:\ESC[0m "
 
 putWarning :: String -> IO ()
 putWarning = putStrLn . (++) "\ESC[33;1mwarning:\ESC[0m "
+
+-------------------------------------------------------------------------------
+--- /////////////////////////////////////////////////////////////////////// ---
+-------------------------------------------------------------------------------
+
+data Fallible e a = Okay a | Failed [e] deriving (Functor, Show, Eq)
+
+instance Applicative (Fallible e) where
+  pure :: a -> Fallible e a
+  pure = Okay
+  (<*>) :: Fallible e (a -> b) -> Fallible e a -> Fallible e b
+  Okay f <*> Okay a = Okay (f a)
+  Okay _ <*> Failed ys = Failed ys
+  Failed xs <*> Okay _ = Failed xs
+  Failed xs <*> Failed ys = Failed (xs<>ys)
+
+instance Monoid a => Monoid (Fallible e a) where 
+  mempty :: Fallible e a
+  mempty = Okay mempty
+
+instance Semigroup (Fallible e a) where
+  (<>) :: Fallible e a -> Fallible e a -> Fallible e a
+  Okay _ <> Okay y = Okay y
+  Okay _ <> Failed ys = Failed ys
+  Failed xs <> Okay _ = Failed xs
+  Failed xs <> Failed ys = Failed (xs<>ys)
+
+instance Monad (Fallible e) where
+  (>>=) :: Fallible e a -> (a -> Fallible e b) -> Fallible e b
+  Okay a >>= f = f a
+  Failed a >>= _ = Failed a
+
+-------------------------------------------------------------------------------
+--- /////////////////////////////////////////////////////////////////////// ---
+-------------------------------------------------------------------------------
+
+ptest :: (Test.QuickCheck.Testable prop) => prop -> IO ()
+ptest p = do
+  r <- quickCheckWithResult stdArgs {chatty = False} p
+  unless (isSuccess r) $
+    putStr "\n\n" *> recheck r p *> assertFailure ""
 
 -------------------------------------------------------------------------------
 --- /////////////////////////////////////////////////////////////////////// ---

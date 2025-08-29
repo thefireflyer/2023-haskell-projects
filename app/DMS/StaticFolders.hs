@@ -140,6 +140,7 @@ exec _ = False
 
 docs :: String -> Bool
 docs "pdf" = True
+docs "epub" = True
 docs "doc" = True
 docs "docx" = True
 docs "pptx" = True
@@ -154,6 +155,7 @@ compressed :: String -> Bool
 compressed "zip" = True
 compressed "tgz" = True
 compressed "gz" = True
+compressed "xz" = True
 compressed "vsix" = True
 compressed "iso" = True
 compressed "qcow2" = True
@@ -168,6 +170,8 @@ code "json" = True
 code "ts" = True
 code "py" = True
 code "rkt" = True
+code "s" = True
+code "h" = True
 code _ = False
 
 -------------------------------------------------------------------------------
