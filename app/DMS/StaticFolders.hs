@@ -159,6 +159,8 @@ compressed "xz" = True
 compressed "vsix" = True
 compressed "iso" = True
 compressed "qcow2" = True
+compressed "qcow2" = True
+compressed "mrpack" = True
 compressed _ = False
 
 -------------------------------------------------------------------------------
@@ -172,6 +174,7 @@ code "py" = True
 code "rkt" = True
 code "s" = True
 code "h" = True
+code "jar" = True
 code _ = False
 
 -------------------------------------------------------------------------------
