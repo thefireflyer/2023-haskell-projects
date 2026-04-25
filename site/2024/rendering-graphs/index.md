@@ -6,16 +6,16 @@
 
 _August 12, 2024 — August 13, 2024_
 
-# Background
+## Background
 
 Visual design is important. To illustrate, consider the two images shown below. Which one(s) have a path from $A$ to $E$?
 
 ![] ![]
 <Graph>
-    node A []
-    node B [right of A]
-    node C [right of B]
-    node D [right of C]
+node A []
+node B [right of A]
+node C [right of B]
+node D [right of C]
 
     node E [below of A]
     node F [right of E]
@@ -24,13 +24,14 @@ Visual design is important. To illustrate, consider the two images shown below. 
 
     A --> B
     A --> C
+
 </Graph>
 <Graph>
 </Graph>
 
 These two images actually depict the same graph. Despite this, one highlights useful information, and the other obscures useful information.
 
-So, we will need to consider visual design in our algorithms. 
+So, we will need to consider visual design in our algorithms.
 
 This is actually why rendering graphs is so hard. It is often unclear how to mathematically predict the clarity of an image. Nonetheless, we will try.
 
@@ -64,17 +65,16 @@ On the other hand, cyclic graphs are often rendered using **Stress Majorization*
 
 In the next two sections, I will describe how these algorithms work in detail, provide reference implementations, and present example results.
 
-# Rendering DAGs 
+## Rendering DAGs
 
-# Rendering Cyclic Graphs
+## Rendering Cyclic Graphs
 
-## Stress Majorization 
+### Stress Majorization
 
-## Priming
+### Priming
 
-## Stochastic Gradient Descent
+### Stochastic Gradient Descent
 
-# Conclusions
+## Conclusions
 
-
-# References
+## References

@@ -7,6 +7,7 @@ The goal of this page is to be a stable, accessible, place to link to.
 I mostly write software, but I do occasionally post other forms of writing. I also do photography from time to time. Important stuff should be listed below.
 
 **Software**
+
 - [Homeportal](homeportal.md)
 - [Website](website.md)
 - [Archived Works](2024/07/13/archived.md)
@@ -14,7 +15,8 @@ I mostly write software, but I do occasionally post other forms of writing. I al
   <!-- - [`katrina`](/) -->
 
 **Learning Projects**
-- [Graph Editor](2024/07/13/graph-editor.md)
+
+- [Graph Editor](/2024/07/13/graph-editor.md)
 - Calculators
   - [Numeric](2024/07/19/numeric-calculator.md)
   - [Algebraic](2024/07/19/algebraic-calculator.md)
@@ -24,22 +26,24 @@ I mostly write software, but I do occasionally post other forms of writing. I al
 - [Vim Clone](todo.md)
 - [Transit System Simulator](todo.md)
 
-<!--## Contributions
+<!-- ## Contributions -->
 
-- [A Little Game Called Mario](https://github.com/a-little-org-called-mario/a-little-game-called-mario)
+<!-- - [A Little Game Called Mario](https://github.com/a-little-org-called-mario/a-little-game-called-mario)
 - [Godot Export](https://github.com/firebelley/godot-export) -->
 
 **Articles**
+
 - 2025
+  - [Finding Ground](2025/finding-ground/index.md)
   - [Transit Problems](todo.md)
-  - [The Math of Watercolor](todo.md)
+  <!-- - [The Math of Watercolor](todo.md) -->
   - [The Knuth-Bendix Completion Algorithm in Context](todo.md)
 - 2024
   - [A Simple SAT Solver](2024/sat.md)
   - [Rendering Graphs](2024/rendering-graphs/index.md)
-<!-- - [A Gentle Dip into SMT Problems](todo.md) -->
-<!-- - [Factorio & the Simplex Algorithm](todo.md) -->
-<!-- - [Abstract Algebra in HoTT](todo.md) -->
+    <!-- - [A Gentle Dip into SMT Problems](todo.md) -->
+    <!-- - [Factorio & the Simplex Algorithm](todo.md) -->
+    <!-- - [Abstract Algebra in HoTT](todo.md) -->
 
 <!-- ## Academic Writing
 
@@ -54,12 +58,14 @@ I mostly write software, but I do occasionally post other forms of writing. I al
 - [This Hope]($todo) -->
 
 **Misc**
+
 - [Photography](2024/photography.md)
 - [Bookmarks](2024/07/13/bookmarks.md)
 - [Contact Info](contact.md)
 - [Resume](todo.md)
 
 **Site todo list:**
+
 - Basics
   - URI normalization
   - Multimedia
@@ -80,7 +86,7 @@ I mostly write software, but I do occasionally post other forms of writing. I al
   - Rust
   - LEAN
 - Embedded DSLs
-  - LaTex 
+  - LaTex
   - Typst
   - Gnuplot
   - Custom: graphs
