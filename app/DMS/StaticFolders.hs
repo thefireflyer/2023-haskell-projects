@@ -21,7 +21,9 @@ import Turtle
     ls,
     mv,
     sh,
+    unless,
   )
+import Turtle.Prelude (testfile)
 
 -------------------------------------------------------------------------------
 --- /////////////////////////////////////////////////////////////////////// ---
@@ -51,9 +53,7 @@ codePrefix = "/home/casey/Downloads/by-type: code/"
 
 normalizeDownloads :: IO ()
 normalizeDownloads =
-  sh
-    ( ls downloadsPath >>= contextualize >>= normalizeFile
-    )
+  sh $ ls downloadsPath >>= contextualize >>= normalizeFile
 
 -------------------------------------------------------------------------------
 
@@ -76,8 +76,11 @@ normalizeFile (path, date, name, ext)
             putStrLn ("path=" ++ path)
             putStrLn ("date=" ++ show date)
             putStrLn ("new path=" ++ newPath)
+            prior <- testfile newPath
+            if prior
+              then putStrLn "Name Conflict"
+              else mv path newPath
             putStrLn ""
-            mv path newPath
         )
   where
     newPath = normalizePath date name ext
